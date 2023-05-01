@@ -31,7 +31,22 @@ class _MyAppState extends State<MyApp> {
             key: formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [],
+              children: [
+                SizedBox(
+                  height: height * 0.04,
+                ),
+                Text(
+                  'Here to get',
+                  style: TextStyle(fontSize: 30, color: Colors.purple),
+                ),
+                Text(
+                  'Welcomed !',
+                  style: TextStyle(fontSize: 30, color: Colors.purple),
+                ),
+                SizedBox(
+                  height: height * 0.05,
+                )
+              ],
             )),
       ),
     );
