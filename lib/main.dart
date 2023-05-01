@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MaterialApp(home: MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -12,42 +12,42 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final formKey = GlobalKey<FormState>();
-  String name = "";
-
   @override
   Widget build(BuildContext context) {
-    final double height = MediaQuery.of(context).size.height;
-    final GlobalKey<ScaffoldState> _scaffolKey = GlobalKey<ScaffoldState>();
     return Scaffold(
-      key: _scaffolKey,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-      body: Container(
-        padding: const EdgeInsets.only(left: 40, right: 40),
-        child: Form(
-            key: formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: height * 0.04,
-                ),
-                Text(
-                  'Here to get',
-                  style: TextStyle(fontSize: 30, color: Colors.purple),
-                ),
-                Text(
-                  'Welcomed !',
-                  style: TextStyle(fontSize: 30, color: Colors.purple),
-                ),
-                SizedBox(
-                  height: height * 0.05,
-                )
-              ],
-            )),
+      body: Column(
+        children: [
+          TextFormField(
+            decoration: InputDecoration(labelText: 'Enter your name'),
+            validator: (value) {
+              if (value!.isEmpty || !RegExp(r'[a-z A-Z]+$').hasMatch(value!)) {
+                return 'Enter correct name';
+              } else {
+                return null;
+              }
+            },
+          ),
+          TextFormField(
+            decoration: InputDecoration(labelText: 'Enter your email'),
+            validator: (value) {
+              if (value!.isEmpty || !RegExp(r'[a-z A-Z]+$').hasMatch(value!)) {
+                return 'Enter correct email';
+              } else {
+                return null;
+              }
+            },
+          ),
+          TextFormField(
+            decoration: InputDecoration(labelText: 'Enter your name'),
+            validator: (value) {
+              if (value!.isEmpty || !RegExp(r'[a-z A-Z]+$').hasMatch(value!)) {
+                return 'Enter correct name';
+              } else {
+                return null;
+              }
+            },
+          )
+        ],
       ),
     );
   }
