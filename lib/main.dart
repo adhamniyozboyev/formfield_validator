@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(MaterialApp(home: MyApp()));
@@ -17,51 +18,54 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          TextFormField(
-            decoration: InputDecoration(labelText: 'Enter your name'),
-            validator: (value) {
-              if (value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value!)) {
-                return 'Enter correct name';
-              } else {
-                return null;
-              }
-            },
-          ),
-          TextFormField(
-            decoration: InputDecoration(labelText: 'Enter your email'),
-            validator: (value) {
-              if (value!.isEmpty ||
-                  !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}$')
-                      .hasMatch(value!)) {
-                return 'Enter correct email';
-              } else {
-                return null;
-              }
-            },
-          ),
-          TextFormField(
-            decoration: InputDecoration(labelText: 'Enter your number'),
-            validator: (value) {
-              if (value!.isEmpty ||
-                  !RegExp(r'^[+]*[(] {0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]]+$')
-                      .hasMatch(value!)) {
-                return 'Enter correct number';
-              } else {
-                return null;
-              }
-            },
-          ),
-          ElevatedButton(
-              onPressed: () {
-                if (formKey.currentState!.validate()) {
-                  final snackBar = SnackBar(content: Text('Submitting'));
+      body: Form(
+        key: formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            TextFormField(
+              decoration: InputDecoration(labelText: 'Enter your name'),
+              validator: (value) {
+                if ( value==null|| value.isEmpty) {
+                  return 'Enter correct name';
+                } else {
+                  return null;
                 }
               },
-              child: Text('Submit'))
-        ],
+            ),
+            TextFormField(
+              decoration: InputDecoration(labelText: 'Enter your email'),
+              validator: (value) {
+                if (value==null|| value.isEmpty) {
+                  return 'Enter correct email';
+                } else {
+                  return null;
+                }
+              },
+            ),
+            TextFormField(
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp('[0-9,+]'))
+              ],
+              decoration: InputDecoration(labelText: 'Enter your number'),
+              validator: (value) {
+                if (value==null || value.isEmpty) {
+                  return 'Enter correct number';
+                } else {
+                  return null;
+                }
+              },
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
+                    final snackBar = SnackBar(content: Text('Submitting'));
+                     
+                  }
+                },
+                child: Text('Submit'))
+          ],
+        ),
       ),
     );
   }
