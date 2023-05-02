@@ -12,15 +12,18 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  final formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState>_scaffoldKey=GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           TextFormField(
             decoration: InputDecoration(labelText: 'Enter your name'),
             validator: (value) {
-              if (value!.isEmpty || !RegExp(r'[a-z A-Z]+$').hasMatch(value!)) {
+              if (value!.isEmpty || !RegExp(r'^[a-z A-Z]+$').hasMatch(value!)) {
                 return 'Enter correct name';
               } else {
                 return null;
@@ -30,7 +33,9 @@ class _MyAppState extends State<MyApp> {
           TextFormField(
             decoration: InputDecoration(labelText: 'Enter your email'),
             validator: (value) {
-              if (value!.isEmpty || !RegExp(r'[a-z A-Z]+$').hasMatch(value!)) {
+              if (value!.isEmpty ||
+                  !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w]{2,4}$')
+                      .hasMatch(value!)) {
                 return 'Enter correct email';
               } else {
                 return null;
@@ -38,15 +43,24 @@ class _MyAppState extends State<MyApp> {
             },
           ),
           TextFormField(
-            decoration: InputDecoration(labelText: 'Enter your name'),
+            decoration: InputDecoration(labelText: 'Enter your number'),
             validator: (value) {
-              if (value!.isEmpty || !RegExp(r'[a-z A-Z]+$').hasMatch(value!)) {
-                return 'Enter correct name';
+              if (value!.isEmpty ||
+                  !RegExp(r'^[+]*[(] {0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]]+$')
+                      .hasMatch(value!)) {
+                return 'Enter correct number';
               } else {
                 return null;
               }
             },
-          )
+          ),
+          ElevatedButton(
+              onPressed: () {
+                if (formKey.currentState!.validate()) {
+                  final snackBar = SnackBar(content: Text('Submitting'));
+                }
+              },
+              child: Text('Submit'))
         ],
       ),
     );
